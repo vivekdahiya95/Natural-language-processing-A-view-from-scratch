@@ -5,3 +5,4 @@
     - BERT: Pre training of deep Bidirectional Transformer for Language understanding
     - RoBERTa: A Robustly optimized BERT pretraining Approach
     - REFORMER: The efficient transformer
+    - Batch Normalization: Accelerating deep network training by reducing internal covariance shift

@@ -13,6 +13,7 @@ create a new file with the same name as the input file but with _cleaned appende
 import re
 import argparse
 
+
 def clean_hindi_sentence(sentence):
     sentence = re.sub(r"(?<=[।,?])", " ", sentence)
     sentence = re.sub(r" +", " ", sentence)
@@ -21,15 +22,26 @@ def clean_hindi_sentence(sentence):
 
 
 if __name__ == "__main__":
-    parser= argparse.ArgumentParser(description="process the input file and return the clean file")
-    parser.add_argument("input_file",type=str, help="input file to be processed")
+    parser = argparse.ArgumentParser(
+        description="process the input file and return the clean file"
+    )
+    parser.add_argument("input_file", type=str, help="input file to be processed")
     args = parser.parse_args()
     input_file_path = args.input_file
     with open(input_file_path, "r") as f:
         data = f.readlines()
+
+    # for the data above replace all the । with .
+    data = [line.replace("।", ".") for line in data]
+
+    # replce any other punctuation other than , . ? with a space
+    data = [re.sub(r"[^\w\s]", " ", line) for line in data]
+
     data = [clean_hindi_sentence(line) for line in data]
-    with open(input_file_path+"_cleaned", "w") as f:
+    with open(input_file_path + "_cleaned", "w") as f:
         f.writelines(data)
 
-
-
+    # now create another data file which operates on final data and removes all punctuations and then creates a new file
+    data = [re.sub(r"[^\w\s]", "", line) for line in data]
+    with open(input_file_path + "_cleaned_without_punctuation", "w") as f:
+        f.writelines(data)
